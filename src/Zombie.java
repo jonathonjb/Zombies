@@ -16,9 +16,10 @@ public class Zombie extends Creature{
     private final int SPEED_RANGE = 1;
     private final int NUM_OF_ROUNDS_SPEED_INCREASE = 2;
 
-    private final int MAX_HEALTH = 3;
-    private final int MIN_HEALTH = 1;
-    private final int NUM_OF_ROUNDS_HEALTH_INCREASE = 3;
+    private final int HEALTH_BUFFER = 5; // how big the difference the max health and the min health can be
+    private final int MAX_HEALTH_INCREASE_PER_ROUND = 1; // how much the max health increases per round
+    private int minHealth = 1;
+    private int maxHealth = 1;
 
     private final int MAX_ROTATION_SPEED = 3;
     private final int MIN_ROTATION_SPEED = 1;
@@ -137,13 +138,11 @@ public class Zombie extends Creature{
 
     public int calcHealth(int _round){
         // calculates the health of the zombie. Can only be 1-3
-        int remainder = _round % NUM_OF_ROUNDS_HEALTH_INCREASE;
-        _round -= remainder;
-        int health = (_round / NUM_OF_ROUNDS_HEALTH_INCREASE) + MIN_HEALTH;
-        if(health > MAX_HEALTH){
-            return MAX_HEALTH;
+        int maxHealth = (MAX_HEALTH_INCREASE_PER_ROUND * _round);
+        if(maxHealth - minHealth > HEALTH_BUFFER){
+            minHealth = maxHealth - HEALTH_BUFFER;
         }
-        return health;
+        return random.nextInt(maxHealth - minHealth + 1) + minHealth;
     }
 
     /**
