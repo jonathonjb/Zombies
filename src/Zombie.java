@@ -18,8 +18,13 @@ public class Zombie extends Creature{
 
     private final int HEALTH_BUFFER = 5; // how big the difference the max health and the min health can be
     private final int MAX_HEALTH_INCREASE_PER_ROUND = 1; // how much the max health increases per round
-    private int minHealth = 1;
-    private int maxHealth = 1;
+    private int minHealth = 1;// the minimum health the zombie can be (entirely dependent on the round)
+    private int maxHealth = 1;// the maximum health the zombie can be (entirely dependent on the round)
+    private int oneHundredPercentHealth; // the health of the zombie when it is completely health
+
+    // when the zombie has 0 damage, the damage rectangle's transparent percentage is 0
+    // when the zombie has 50% of damage, the damage rectangle's transparent percentage will be 50% of this number.
+    private final int HIGHEST_DAMAGE_TRANSPARENT_PERCENTAGE = 50;
 
     private final int MAX_ROTATION_SPEED = 3;
     private final int MIN_ROTATION_SPEED = 1;
@@ -142,7 +147,8 @@ public class Zombie extends Creature{
         if(maxHealth - minHealth > HEALTH_BUFFER){
             minHealth = maxHealth - HEALTH_BUFFER;
         }
-        return random.nextInt(maxHealth - minHealth + 1) + minHealth;
+        oneHundredPercentHealth = random.nextInt(maxHealth - minHealth + 1) + minHealth;
+        return oneHundredPercentHealth;
     }
 
     /**
@@ -193,6 +199,16 @@ public class Zombie extends Creature{
 
     public void paintZombie(Graphics2D g2d){
         paintSprite(g2d);
+        int alpha = (int)((Math.abs((double)(getHealth() - oneHundredPercentHealth) / (double)oneHundredPercentHealth)) * 255);
+        alpha = (int)((double)alpha * ((double)HIGHEST_DAMAGE_TRANSPARENT_PERCENTAGE / 100));
+
+        g2d.setColor(new Color(255, 0, 0, alpha));
+
+        g2d.translate(getX(), getY());
+        g2d.rotate(Math.toRadians(-getDegrees()));
+        g2d.fillRect(-(getWidth() / 2), -(getHeight() / 2), getWidth() - 5, getHeight());
+        g2d.rotate(Math.toRadians(getDegrees()));
+        g2d.translate(-getX(), -getY());
     }
 
     /**
