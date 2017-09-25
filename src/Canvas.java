@@ -35,7 +35,7 @@ public class Canvas extends JPanel implements ActionListener, KeyListener {
         zombiesList = new ZombiesList();
         //%TEST%
         // zombiesList.spawnZombie(10);
-        round = 10;
+        // round = 10;
 
         timer.start();
         addKeyListener(this);

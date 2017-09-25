@@ -199,14 +199,23 @@ public class Zombie extends Creature{
 
     public void paintZombie(Graphics2D g2d){
         paintSprite(g2d);
+
+        // if the zombie is injured, then we will paint it red to show that it is injured
         int alpha = (int)((Math.abs((double)(getHealth() - oneHundredPercentHealth) / (double)oneHundredPercentHealth)) * 255);
         alpha = (int)((double)alpha * ((double)HIGHEST_DAMAGE_TRANSPARENT_PERCENTAGE / 100));
 
         g2d.setColor(new Color(255, 0, 0, alpha));
 
+        // paints the red injury rectangle over the zombie's body
         g2d.translate(getX(), getY());
         g2d.rotate(Math.toRadians(-getDegrees()));
+        // body
         g2d.fillRect(-(getWidth() / 2), -(getHeight() / 2), getWidth() - 5, getHeight());
+        // left arm
+        g2d.fillRect(10, -15, 5, 7);
+        // right arm
+        g2d.fillRect(10, 8, 5, 7);
+
         g2d.rotate(Math.toRadians(getDegrees()));
         g2d.translate(-getX(), -getY());
     }
