@@ -5,14 +5,12 @@ import triangle.TriangleTools;
  * @author Jonathon Brandt on 9/13/17.
  * @project Zombies
  */
-public class Weapon extends Sprite {
+public abstract class Weapon extends Sprite {
     private final int X_BUFFER = 10;
 
     protected Player player;
     private int distanceFromPlayer;
     private int degreesFromPlayer;
-
-    private boolean attacking = false;
 
     /**
      * Constructor; creates a new weapon.
@@ -77,7 +75,7 @@ public class Weapon extends Sprite {
     /**
      * This is a method all weapons (Classes that extends Weapon) will have, and overwrite
      */
-    public void attack(){}
+    public abstract void attack();
 
     /**
      * (Does nothing)
@@ -86,7 +84,7 @@ public class Weapon extends Sprite {
      * @return A rectangle which represents the attack bounds of the current weapon
      */
 
-    public Rectangle getAttackBounds(){return new Rectangle(0, 0, 0, 0);}
+    public abstract Rectangle getAttackBounds();
 
     /**
      * Checks if the current weapon bounds collides with a sprite
