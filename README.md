@@ -12,3 +12,6 @@ Press the space bar to attack using your weapon
 
 A bunch of zombies will chase you, try to survive for as long as you can! The current round number
 is at the upper left corner of the screen.
+
+# Short video of gameplay: 
+https://imgur.com/a/KWWTVfw
